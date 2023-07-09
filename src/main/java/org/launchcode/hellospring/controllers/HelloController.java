@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("hello")
+//@RequestMapping("hello")
 public class HelloController {
 
     // Handles request at path /hello
@@ -16,33 +16,68 @@ public class HelloController {
 //    }
 
     // Handles request at path /hello/goodbye
-    @GetMapping("goodbye")
-    public String goodbye() {
-        return "Goodbye, Spring!";
-    }
+//    @GetMapping("goodbye")
+//    public String goodbye() {
+//        return "Goodbye, Spring!";
+//    }
+//
+//    // Handles request of the form /hello?name=LaunchCode
+//    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+//    public String helloWithQueryParam(@RequestParam String name) {
+//        return "Hello, " + name + "!";
+//    }
+//
+//    // Handles request of the form /hello/LaunchCode
+//    @GetMapping("{name}")
+//    public String helloWithPathParam(@PathVariable String name) {
+//        return "Hello, " + name + "!";
+//    }
+//
+//    // Display form, lives at /hello/form
+//    @GetMapping("form")
+//    public String helloForm() {
+//        return "<html>" +
+//                    "<body>" +
+//                        "<form action='hello' method='post'>" + //submits a request to /hello
+//                            "<input type='text' name='name'>" +
+//                            "<input type='submit' value='Greet me!'>" +
+//                        "</form>" +
+//                    "</body>" +
+//                "</html>";
+//    }
 
-    // Handles request of the form /hello?name=LaunchCode
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!";
-    }
-
-    // Handles request of the form /hello/LaunchCode
-    @GetMapping("{name}")
-    public String helloWithPathParam(@PathVariable String name) {
-        return "Hello, " + name + "!";
-    }
-
-    // Display form, lives at /hello/form
-    @GetMapping("form")
-    public String helloForm() {
+    @GetMapping
+    public String nameLanguageForm() {
         return "<html>" +
                     "<body>" +
-                        "<form action='hello' method='post'>" + //submits a request to /hello
+                        "<form method='post' action='greeting'>" +
                             "<input type='text' name='name'>" +
-                            "<input type='submit' value='Greet me!'>" +
+                            "<select name='language'>" +
+                                "<option value='english'>English</option>" +
+                                "<option value='spanish'>Spanish</option>" +
+                                "<option value='french'>French</option>" +
+                                "<option value='italian'>Italian</option>" +
+                                "<option value='german'>German</option>" +
+                            "</select>" +
+                            "<button type='submit'>Greet me!</button>" +
                         "</form>" +
                     "</body>" +
                 "</html>";
+    }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "greeting")
+    public static String createMessage(@RequestParam String name, String language) {
+        switch (language) {
+            case "english":
+                return "Hello " + name + "!";
+            case "spanish":
+                return "Hola " + name + "!";
+            case "french":
+                return "Bonjour " + name + "!";
+            case "italian":
+                return "Ciao " + name + "!";
+            default:
+                return "Guten Tag " + name + "!";
+        }
     }
 }
