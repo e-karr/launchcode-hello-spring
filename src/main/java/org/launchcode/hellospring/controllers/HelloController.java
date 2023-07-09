@@ -66,18 +66,38 @@ public class HelloController {
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "greeting")
-    public static String createMessage(@RequestParam String name, String language) {
+    public String greeting(@RequestParam String name, @RequestParam String language) {
+        if (name == null) {
+            name = "World";
+        }
+
+        return createMessage(name, language);
+    }
+
+    public static String createMessage(String name, String language) {
+        String response;
+
         switch (language) {
             case "english":
-                return "Hello " + name + "!";
+                response = "Hello " + name + "!";
+                break;
             case "spanish":
-                return "Hola " + name + "!";
+                response = "Hola " + name + "!";
+                break;
             case "french":
-                return "Bonjour " + name + "!";
+                response = "Bonjour " + name + "!";
+                break;
             case "italian":
-                return "Ciao " + name + "!";
+                response = "Ciao " + name + "!";
+                break;
             default:
-                return "Guten Tag " + name + "!";
+                response = "Guten Tag " + name + "!";
         }
+
+        return "<html>" +
+                    "<body>" +
+                        "<h1 style='color: purple'>" + response + "</h1>" +
+                    "</body>" +
+                "</html>";
     }
 }
